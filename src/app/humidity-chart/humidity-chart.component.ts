@@ -41,7 +41,14 @@ export class HumidityChartComponent implements OnInit {
   constructor(private httpClient: HttpClient) {
     for(let i=1;i<60;i++){
     this.httpClient.get('https://rodrigue-projects.site/humidity/'+i).subscribe(
-      (res) => {this.measurements.push(res["airHumidity"]); this.dates.push(res["createdAt"])},
+      (res) => {
+        this.measurements.push(
+            {
+            x : res["createdAt"], 
+            y: res["airHumidity"]
+            }
+        )
+      },
       (error) => { console.log(error);}
       );
     }
