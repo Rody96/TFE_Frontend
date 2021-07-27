@@ -44,10 +44,13 @@ export class HumidityChartComponent implements OnInit {
       (res) => {
         this.measurements.push(
             {
-            x : res["createdAt"], 
-            y: res["airHumidity"]
+            "x" : res["createdAt"], 
+            "y": res["airHumidity"]
             }
         )
+        this.measurements.sort(function(a,b){
+          return new Date(a.x).valueOf() - new Date(b.x).valueOf();
+        });
       },
       (error) => { console.log(error);}
       );
