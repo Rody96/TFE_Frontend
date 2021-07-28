@@ -13,6 +13,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 })
 export class HumidityChartComponent implements OnInit {
 
+  results: any[] = [];
   measurements = [
     {
       "name": "Humidity",
@@ -41,24 +42,28 @@ export class HumidityChartComponent implements OnInit {
   
     constructor(private httpClient: HttpClient) {
 
-      for(let i=1;i<60;i++){
-        this.httpClient.get('https://rodrigue-projects.site/humidity/'+i).subscribe(
+      
+        this.httpClient.get('https://rodrigue-projects.site/humidity/all').subscribe(
           (res) => {
-            this.measurements[0].series.push(
+            this.results.push(res);
+             for(let i=0; i < this.results[0].length;i++){
+              this.measurements[0].series.push(
                 {
-                "name" : res["createdAt"], 
-                "value": res["airHumidity"]
-                }
-            )
+                "name" : this.results[0][i]["createdAt"], 
+                "value": this.results[0][i]["airHumidity"]
+               }
+              )
+            }
             this.measurements[0].series.sort(function(a,b){
               return new Date(a.name).valueOf() - new Date(b.name).valueOf();
             });
-            this.measurements = [...this.measurements];
+            this.measurements = [...this.measurements]; 
+            
           },
           (error) => { console.log(error);}
           );
-        }
-        console.log(this.measurements)
+            
+       //console.log(this.measurements)
       Object.assign( this, this.measurements );
     }
   

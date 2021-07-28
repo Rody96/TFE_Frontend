@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class AirQualityChartComponent implements OnInit {
 
+  results: any[] = [];
   measurements = [
     {
       "name": "Air Quality",
@@ -40,24 +41,27 @@ export class AirQualityChartComponent implements OnInit {
   
     constructor(private httpClient: HttpClient) {
 
-      for(let i=1;i<60;i++){
-        this.httpClient.get('https://rodrigue-projects.site/airquality/'+i).subscribe(
+      this.httpClient.get('https://rodrigue-projects.site/airquality/all').subscribe(
           (res) => {
-            this.measurements[0].series.push(
+            this.results.push(res);
+             for(let i=0; i < this.results[0].length;i++){
+              this.measurements[0].series.push(
                 {
-                "name" : res["createdAt"], 
-                "value": res["ppm"]
-                }
-            )
+                "name" : this.results[0][i]["createdAt"], 
+                "value": this.results[0][i]["ppm"]
+               }
+              )
+            }
             this.measurements[0].series.sort(function(a,b){
               return new Date(a.name).valueOf() - new Date(b.name).valueOf();
             });
-            this.measurements = [...this.measurements];
+            this.measurements = [...this.measurements]; 
+            
           },
           (error) => { console.log(error);}
           );
-        }
-        console.log(this.measurements)
+            
+       //console.log(this.measurements)
       Object.assign( this, this.measurements );
     }
   
