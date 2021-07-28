@@ -1,26 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
-import { ViewChild } from '@angular/core';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-};
 
 @Component({
   selector: 'app-air-quality-chart',
@@ -29,54 +12,66 @@ export type ChartOptions = {
 })
 export class AirQualityChartComponent implements OnInit {
 
-  @ViewChild("airQualityChart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  measurements = [
+    {
+      "name": "Air Quality",
+      "series":[
+  
+      ]
+    }
+  ];
+  view: any[] = [1000, 500];
 
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Air Quality",
-          data: [10, 41, 35, 51, 49, 62, 69]
-        }
-      ],
-      chart: {
-        height: 450,
-        type: "line",
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "straight"
-      },
-      title: {
-        text: "Air Quality",
-        align: "left"
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-          opacity: 0.5
-        }
-      },
-      xaxis: {
-        categories: [
-          "Lun",
-          "Mar",
-          "Mer",
-          "Jeu",
-          "Ven",
-          "Sam",
-          "Dim"
-        ]
-      }
+    // options
+    legend: boolean = false;
+    showLabels: boolean = true;
+    animations: boolean = true;
+    xAxis: boolean = true;
+    yAxis: boolean = true;
+    showYAxisLabel: boolean = true;
+    showXAxisLabel: boolean = true;
+    xAxisLabel: string = 'Time';
+    yAxisLabel: string = 'Air Quality (PPM)';
+    timeline: boolean = true;
+
+    colorScheme = {
+      domain: ['#5AA454']
     };
-  }
+  
+    constructor(private httpClient: HttpClient) {
 
+      for(let i=1;i<60;i++){
+        this.httpClient.get('https://rodrigue-projects.site/airquality/'+i).subscribe(
+          (res) => {
+            this.measurements[0].series.push(
+                {
+                "name" : res["createdAt"], 
+                "value": res["ppm"]
+                }
+            )
+            this.measurements[0].series.sort(function(a,b){
+              return new Date(a.name).valueOf() - new Date(b.name).valueOf();
+            });
+            this.measurements = [...this.measurements];
+          },
+          (error) => { console.log(error);}
+          );
+        }
+        console.log(this.measurements)
+      Object.assign( this, this.measurements );
+    }
+  
+    onSelect(data): void {
+      //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    }
+  
+    onActivate(data): void {
+      //console.log('Activate', JSON.parse(JSON.stringify(data)));
+    }
+  
+    onDeactivate(data): void {
+      //console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    }
   ngOnInit(): void {
   }
 

@@ -3,27 +3,8 @@ import { ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {HumidityService} from '../services/humidity.service';
 import { HttpClient } from '@angular/common/http';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid
-} from "ng-apexcharts";
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-};
 
 @Component({
   selector: 'app-humidity-chart',
@@ -32,65 +13,66 @@ export type ChartOptions = {
 })
 export class HumidityChartComponent implements OnInit {
 
-  @ViewChild("humidityChart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  measurements = [];
-  dates = []
-  homepageSubscription: Subscription;
-
-  constructor(private httpClient: HttpClient) {
-    for(let i=1;i<60;i++){
-    this.httpClient.get('https://rodrigue-projects.site/humidity/'+i).subscribe(
-      (res) => {
-        this.measurements.push(
-            {
-            "x" : res["createdAt"], 
-            "y": res["airHumidity"]
-            }
-        )
-        this.measurements.sort(function(a,b){
-          return new Date(a.x).valueOf() - new Date(b.x).valueOf();
-        });
-      },
-      (error) => { console.log(error);}
-      );
+  measurements = [
+    {
+      "name": "Humidity",
+      "series":[
+  
+      ]
     }
-    this.chartOptions = {
-      series: [
-        {
-          name: "humidity",
-          data: this.measurements
-        }
-      ],
-      chart: {
-        height: 450,
-        type: "line",
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "straight"
-      },
-      title: {
-        text: "Humidity",
-        align: "left"
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-          opacity: 0.5
-        }
-      },
-      xaxis: {
-        categories: this.dates
-      }
+  ];
+  view: any[] = [1000, 500];
+
+    // options
+    legend: boolean = false;
+    showLabels: boolean = true;
+    animations: boolean = true;
+    xAxis: boolean = true;
+    yAxis: boolean = true;
+    showYAxisLabel: boolean = true;
+    showXAxisLabel: boolean = true;
+    xAxisLabel: string = 'Time';
+    yAxisLabel: string = 'Humidity (%)';
+    timeline: boolean = true;
+
+    colorScheme = {
+      domain: ['#7aa3e5']
     };
-    console.log(this.dates)
-  }
+  
+    constructor(private httpClient: HttpClient) {
+
+      for(let i=1;i<60;i++){
+        this.httpClient.get('https://rodrigue-projects.site/humidity/'+i).subscribe(
+          (res) => {
+            this.measurements[0].series.push(
+                {
+                "name" : res["createdAt"], 
+                "value": res["airHumidity"]
+                }
+            )
+            this.measurements[0].series.sort(function(a,b){
+              return new Date(a.name).valueOf() - new Date(b.name).valueOf();
+            });
+            this.measurements = [...this.measurements];
+          },
+          (error) => { console.log(error);}
+          );
+        }
+        console.log(this.measurements)
+      Object.assign( this, this.measurements );
+    }
+  
+    onSelect(data): void {
+      //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    }
+  
+    onActivate(data): void {
+      //console.log('Activate', JSON.parse(JSON.stringify(data)));
+    }
+  
+    onDeactivate(data): void {
+      //console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    }
 
   ngOnInit(): void {
    

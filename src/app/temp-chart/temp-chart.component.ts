@@ -1,25 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid
-} from "ng-apexcharts";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  dataLabels: ApexDataLabels;
-  grid: ApexGrid;
-  stroke: ApexStroke;
-  title: ApexTitleSubtitle;
-};
+
+
+
+
 
 @Component({
   selector: 'app-temp-chart',
@@ -28,54 +16,67 @@ export type ChartOptions = {
 })
 export class TempChartComponent implements OnInit {
 
-  @ViewChild("temperatureChart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "temperature",
-          data: [10, 41, 35, 51, 49, 62, 69]
-        }
-      ],
-      chart: {
-        height: 450,
-        type: "line",
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "straight"
-      },
-      title: {
-        text: "Temperature",
-        align: "left"
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-          opacity: 0.5
-        }
-      },
-      xaxis: {
-        categories: [
-          "Lun",
-          "Mar",
-          "Mer",
-          "Jeu",
-          "Ven",
-          "Sam",
-          "Dim"
-        ]
-      }
+  measurements = [
+    {
+      "name": "Temperature",
+      "series":[
+  
+      ]
+    }
+  ];
+  view: any[] = [1000, 500];
+
+    // options
+    legend: boolean = false;
+    showLabels: boolean = true;
+    animations: boolean = true;
+    xAxis: boolean = true;
+    yAxis: boolean = true;
+    showYAxisLabel: boolean = true;
+    showXAxisLabel: boolean = true;
+    xAxisLabel: string = 'Time';
+    yAxisLabel: string = 'Temperature (°C)';
+    timeline: boolean = true;
+
+    colorScheme = {
+      domain: ['#a8385d']
     };
-  }
+  
+    constructor(private httpClient: HttpClient) {
 
+      for(let i=1;i<60;i++){
+        this.httpClient.get('https://rodrigue-projects.site/temperature/'+i).subscribe(
+          (res) => {
+            this.measurements[0].series.push(
+                {
+                "name" : res["createdAt"], 
+                "value": res["temperature"]
+                }
+            )
+            this.measurements[0].series.sort(function(a,b){
+              return new Date(a.name).valueOf() - new Date(b.name).valueOf();
+            });
+            this.measurements = [...this.measurements];
+          },
+          (error) => { console.log(error);}
+          );
+        }
+        console.log(this.measurements)
+      Object.assign( this, this.measurements );
+    }
+  
+    onSelect(data): void {
+      //console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    }
+  
+    onActivate(data): void {
+      //console.log('Activate', JSON.parse(JSON.stringify(data)));
+    }
+  
+    onDeactivate(data): void {
+      //console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    }
   ngOnInit(): void {
   }
 
