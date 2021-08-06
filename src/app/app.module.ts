@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -15,10 +14,21 @@ import { TempChartComponent } from './temp-chart/temp-chart.component';
 import { HumidityChartComponent } from './humidity-chart/humidity-chart.component';
 import { AirQualityChartComponent } from './air-quality-chart/air-quality-chart.component';
 import { HumidityService } from './services/humidity.service';
+import { 
+  AuthGuardService as AuthGuard 
+} from './services/auth/auth-guard.service';
+import { AuthService } from './services/auth/auth.service';
+import { SignupComponent } from './authComponents/signup/signup.component';
+import { SigninComponent } from './authComponents/signin/signin.component';
+import { HeaderComponent } from './header/header.component';
 
 
 const appRoutes: Routes = [
-  { path: '', component: HomepageComponent },
+  { path: 'auth/signup', component: SignupComponent },
+  { path: 'auth/signin', component: SigninComponent },
+  { path: 'home', component: HomepageComponent, canActivate : [AuthGuard] },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
@@ -28,6 +38,9 @@ const appRoutes: Routes = [
     TempChartComponent,
     HumidityChartComponent,
     AirQualityChartComponent,
+    SignupComponent,
+    SigninComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +52,7 @@ const appRoutes: Routes = [
     NgApexchartsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [TemperatureService, HumidityService],
+  providers: [TemperatureService, HumidityService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
