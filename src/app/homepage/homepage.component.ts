@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TemperatureService} from '../services/temperature.service';
 import {HumidityService} from '../services/humidity.service';
 import { Subscription } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',

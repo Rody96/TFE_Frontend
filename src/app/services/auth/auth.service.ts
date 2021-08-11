@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +34,15 @@ export class AuthService {
     return this.http.post(apiURL, body, { headers }).toPromise()
   }
 
-  signInUser(email: string, password: string) {
+  signInUser(email: string, password: string) : Observable<any> {
     const apiURL = "https://rodrigue-projects.site/users/signin";
-    const headers = { 'Content-Type': 'application/json' };
-    const body = { 
+    const headers = { 'content-Type': 'application/json' };
+    const body = JSON.stringify({ 
       "mail": email,
       "password": password
-    };
-    return this.http.post(apiURL, body, { headers }).toPromise()
+    });
+    console.log
+    return this.http.post(apiURL, body, { headers })
   }
 
   signOutUser() {
