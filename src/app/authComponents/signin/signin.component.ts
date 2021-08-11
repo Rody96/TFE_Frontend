@@ -49,7 +49,7 @@ export class SigninComponent implements OnInit {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                  "mail": "A.Jones@test.com",
+                  "mail": "toto@test.com",
                   "password": "test"
                 })
             }).then((response) => response.json())
