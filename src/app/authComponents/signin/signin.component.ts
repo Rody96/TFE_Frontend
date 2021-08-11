@@ -42,7 +42,7 @@ export class SigninComponent implements OnInit {
 */
   onSubmit() {
 
-    fetch("https://rodrigue-projects.site/users/signin", {
+    fetch("https://rodrigue-projects.site/api/auth/signin", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
