@@ -1,40 +1,39 @@
-<div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
-    <h2>Créer un compte</h2>
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="password">Nom</label>
-        <input type="text"
-               id="lastName"
-               class="form-control"
-               formControlName="lastName">
-      </div>
-      <div class="form-group">
-        <label for="password">Prénom</label>
-        <input type="text"
-               id="firstName"
-               class="form-control"
-               formControlName="firstName">
-      </div>
-      <div class="form-group">
-        <label for="email">Adresse mail</label>
-        <input type="text"
-               id="email"
-               class="form-control"
-               formControlName="email">
-      </div>
-      <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input type="password"
-               id="password"
-               class="form-control"
-               formControlName="password">
-      </div>
-      <button class="btn btn-primary"
-              type="submit"
-              [disabled]="signupForm.invalid">Créer mon compte</button>
-    </form>
-    <p class="text-danger">{{ errorMessage }}</p>
+<div class="container-fluid">
+  <div class="row no-gutter">
+      <!-- The image half -->
+      <div class="col-md-6 d-none d-md-flex bg-imageSignup"></div>
+      <!-- The content half -->
+      <div class="col-md-6 bg-light">
+          <div class="login d-flex align-items-center py-5">
+              <!-- Demo content-->
+              <div class="container">
+                  <div class="row">
+                      <div class="col-lg-10 col-xl-7 mx-auto">
+                        <img src="../../../assets/ic_launcher.png" class="rounded mx-auto d-block">
+                          <h3 class="display-4 text-center">AirQualityMonitoring</h3>
+                          <p class="text-muted font-weight-bold font-italic mb-4 text-center">Soyez acteur/actrice contre la pollution intérieure </p>
+                          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                              <div class="form-group mb-3">
+                                <input id="inputNom" type="text" placeholder="Nom" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                              </div>
+                              <div class="form-group mb-3">
+                                <input id="inputPrénom" type="text" placeholder="Prénom" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                              </div>
+                              <div class="form-group mb-3">
+                                  <input id="inputEmail" type="email" placeholder="Adresse e-mail" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                              </div>
+                              <div class="form-group mb-3">
+                                  <input id="inputPassword" type="password" placeholder="Mot de passe" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                              </div>
+                              <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" [disabled]="signupForm.invalid">S'inscrire</button>
+                              <div class="text-center mt-5 "><p>Vous avez déjà un compte ? <a href="auth/signin" class="font-italic text-muted"> 
+                                <u class="text-info">Connectez-vous</u></a></p></div>
+                          </form>
+                          <p class="text-danger">{{ errorMessage }}</p>
+                      </div>
+                  </div>
+              </div><!-- End -->
+          </div>
+      </div><!-- End -->
   </div>
 </div>
-
