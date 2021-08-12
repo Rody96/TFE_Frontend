@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
+import { TokenStorageService } from '../services/auth/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -10,19 +11,21 @@ export class HeaderComponent implements OnInit {
 
   isAuth: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private tokenStorage: TokenStorageService
+              ) { }
 
   ngOnInit() {
-    //console.log("isLoggedIn ? " + this.authService.isAuthenticated())
-    if(this.authService.isAuthenticated()){
+    if(this.authService.loggedIn()){
       this.isAuth = true;
     }
-    else {
+    else{
       this.isAuth = false;
     }
   }
 
   onSignOut() {
-    this.authService.signOutUser();
+    this.tokenStorage.signOut();
+    window.location.reload();
   }
 }

@@ -13,6 +13,9 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   errorMessage: string;
 
+  isSuccessful = false;
+  isSignUpFailed = false;
+
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -24,7 +27,7 @@ export class SignupComponent implements OnInit {
 
   initForm() {
     this.signupForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      mail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]],
       lastName: [''],
       firstName: ['']
@@ -32,16 +35,23 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    const email = this.signupForm.get('email').value;
+    const email = this.signupForm.get('mail').value;
     const password = this.signupForm.get('password').value;
     const lastName = this.signupForm.get('lastName').value;
     const firstName = this.signupForm.get('firstName').value;
     
-    this.authService.createNewUser(email, password, lastName, firstName ).then(
-      () => {
-        this.router.navigate(['home']);
+    this.authService.signup(email, password, lastName, firstName ).subscribe(
+      data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+        this.router.navigate(['/auth/signin'])
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
       }
-    )
+    );
   }
 
 }

@@ -1,53 +1,41 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TokenStorageService } from './token-storage.service';
+
+const AUTH_API = 'https://rodrigue-projects.site/api/auth/';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient,
+              private tokenStorage: TokenStorageService
+              ) { }
 
-  public isAuthenticated() : Boolean {
-    let userData = localStorage.getItem('userInfo')
-    if(userData && JSON.parse(userData)){
-      return true;
-    }
-    return false;
+  loggedIn(){
+    return !!this.tokenStorage.getToken();
   }
 
-  public setUserInfo(user){
-    localStorage.setItem('userInfo', JSON.stringify(user));
+  signin(email: string, password: string): Observable<any> {
+    return this.http.post(AUTH_API + 'signin', { 
+      "mail": email,
+      "password": password
+    }, httpOptions);
   }
 
-  createNewUser(email: string, password: string, firstName:string, lastName: string) {
-    const apiURL = "https://rodrigue-projects.site/users/signup";
-    const headers = { 'Content-Type': 'application/json' };
-    const body = { 
+  signup(email: string, password: string, firstName:string, lastName: string): Observable<any> {
+    return this.http.post(AUTH_API + 'signup', { 
       "mail": email,
       "password": password,
       "firstName": firstName,
       "lastName": lastName,
-      "learningMode": false
-    };
-    return this.http.post(apiURL, body, { headers }).toPromise()
-  }
-
-  signInUser(email: string, password: string) : Observable<any> {
-    const apiURL = "https://rodrigue-projects.site/users/signin";
-    const headers = { 'content-Type': 'application/json' };
-    const body = JSON.stringify({ 
-      "mail": email,
-      "password": password
-    });
-    console.log
-    return this.http.post(apiURL, body, { headers })
-  }
-
-  signOutUser() {
-    const apiURL = "https://rodrigue-projects.site/users/logout";
-    const headers = { 'Accept': 'application/json','Content-Type': 'application/json' };
-    return this.http.get(apiURL, { headers }).toPromise()
+      "roles": ["user"]
+    }, httpOptions);
   }
 }
