@@ -21,6 +21,7 @@ import { SigninComponent } from './authComponents/signin/signin.component';
 import { HeaderComponent } from './header/header.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 
+
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
