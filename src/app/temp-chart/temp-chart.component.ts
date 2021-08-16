@@ -20,9 +20,7 @@ export class TempChartComponent implements OnInit {
   measurements = [
     {
       "name": "Temperature",
-      "series":[
-  
-      ]
+      "series":[]
     }
   ];
   view: any[] = [1000, 500];
@@ -35,7 +33,7 @@ export class TempChartComponent implements OnInit {
     yAxis: boolean = true;
     showYAxisLabel: boolean = true;
     showXAxisLabel: boolean = true;
-    xAxisLabel: string = 'Time';
+    xAxisLabel: string = 'Temps';
     yAxisLabel: string = 'Temperature (°C)';
     timeline: boolean = true;
 
@@ -51,7 +49,7 @@ export class TempChartComponent implements OnInit {
              for(let i=0; i < this.results[0].length;i++){
               this.measurements[0].series.push(
                 {
-                "name" : this.results[0][i]["createdAt"], 
+                "name" : new Date(this.results[0][i]["createdAt"]), 
                 "value": this.results[0][i]["temperature"]
                }
               )

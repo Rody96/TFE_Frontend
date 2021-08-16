@@ -16,9 +16,7 @@ export class AirQualityChartComponent implements OnInit {
   measurements = [
     {
       "name": "Air Quality",
-      "series":[
-  
-      ]
+      "series":[]
     }
   ];
   view: any[] = [1000, 500];
@@ -31,8 +29,8 @@ export class AirQualityChartComponent implements OnInit {
     yAxis: boolean = true;
     showYAxisLabel: boolean = true;
     showXAxisLabel: boolean = true;
-    xAxisLabel: string = 'Time';
-    yAxisLabel: string = 'Air Quality (PPM)';
+    xAxisLabel: string = 'Temps';
+    yAxisLabel: string = 'Concentration CO₂ (PPM)';
     timeline: boolean = true;
 
     colorScheme = {
@@ -47,7 +45,7 @@ export class AirQualityChartComponent implements OnInit {
              for(let i=0; i < this.results[0].length;i++){
               this.measurements[0].series.push(
                 {
-                "name" : this.results[0][i]["createdAt"], 
+                "name" : new Date(this.results[0][i]["createdAt"]), 
                 "value": this.results[0][i]["ppm"]
                }
               )

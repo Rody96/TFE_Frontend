@@ -17,9 +17,7 @@ export class HumidityChartComponent implements OnInit {
   measurements = [
     {
       "name": "Humidity",
-      "series":[
-  
-      ]
+      "series":[]
     }
   ];
   view: any[] = [1000, 500];
@@ -32,8 +30,8 @@ export class HumidityChartComponent implements OnInit {
     yAxis: boolean = true;
     showYAxisLabel: boolean = true;
     showXAxisLabel: boolean = true;
-    xAxisLabel: string = 'Time';
-    yAxisLabel: string = 'Humidity (%)';
+    xAxisLabel: string = 'Temps';
+    yAxisLabel: string = 'Humidité (%)';
     timeline: boolean = true;
 
     colorScheme = {
@@ -49,7 +47,7 @@ export class HumidityChartComponent implements OnInit {
              for(let i=0; i < this.results[0].length;i++){
               this.measurements[0].series.push(
                 {
-                "name" : this.results[0][i]["createdAt"], 
+                "name" : new Date(this.results[0][i]["createdAt"]), 
                 "value": this.results[0][i]["airHumidity"]
                }
               )

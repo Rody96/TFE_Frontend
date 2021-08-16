@@ -26,6 +26,9 @@ const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
   { path: 'home', component: HomepageComponent, canActivate : [AuthGuardService] },
+  { path: 'temperature', component: TempChartComponent, canActivate : [AuthGuardService] },
+  { path: 'humidity', component: HumidityChartComponent, canActivate : [AuthGuardService] },
+  { path: 'ppm', component: AirQualityChartComponent, canActivate : [AuthGuardService] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
