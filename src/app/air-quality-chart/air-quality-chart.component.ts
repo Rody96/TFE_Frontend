@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-air-quality-chart',
   templateUrl: './air-quality-chart.component.html',
-  styleUrls: ['./air-quality-chart.component.scss']
+  styleUrls: ['./air-quality-chart.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AirQualityChartComponent implements OnInit {
 
@@ -34,7 +35,7 @@ export class AirQualityChartComponent implements OnInit {
     timeline: boolean = true;
 
     colorScheme = {
-      domain: ['#5AA454']
+      domain: ['#006400']
     };
   
     constructor(private httpClient: HttpClient) {

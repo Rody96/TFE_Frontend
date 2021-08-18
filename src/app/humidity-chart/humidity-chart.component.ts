@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {HumidityService} from '../services/humidity.service';
 import { HttpClient } from '@angular/common/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-
 @Component({
   selector: 'app-humidity-chart',
   templateUrl: './humidity-chart.component.html',
-  styleUrls: ['./humidity-chart.component.scss']
+  styleUrls: ['./humidity-chart.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HumidityChartComponent implements OnInit {
 
@@ -35,7 +35,7 @@ export class HumidityChartComponent implements OnInit {
     timeline: boolean = true;
 
     colorScheme = {
-      domain: ['#7aa3e5']
+      domain: ['#00008B']
     };
   
     constructor(private httpClient: HttpClient) {

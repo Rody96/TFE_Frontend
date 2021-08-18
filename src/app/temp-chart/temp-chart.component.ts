@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-
+import { ViewEncapsulation } from '@angular/core';
 
 
 
@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-temp-chart',
   templateUrl: './temp-chart.component.html',
-  styleUrls: ['./temp-chart.component.scss']
+  styleUrls: ['./temp-chart.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TempChartComponent implements OnInit {
 
@@ -38,7 +39,7 @@ export class TempChartComponent implements OnInit {
     timeline: boolean = true;
 
     colorScheme = {
-      domain: ['#a8385d']
+      domain: ['#8B0000']
     };
   
     constructor(private httpClient: HttpClient) {
