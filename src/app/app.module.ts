@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';;
@@ -20,12 +19,15 @@ import { SignupComponent } from './authComponents/signup/signup.component';
 import { SigninComponent } from './authComponents/signin/signin.component';
 import { HeaderComponent } from './header/header.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { HomeComponent } from './home/home.component';
+import { MeasurementChoiceComponent } from './measurement-choice/measurement-choice.component';
 
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
-  { path: 'home', component: HomepageComponent, canActivate : [AuthGuardService] },
+  { path: 'home', component: HomeComponent, canActivate : [AuthGuardService] },
+  { path: 'measurement', component: MeasurementChoiceComponent, canActivate : [AuthGuardService] },
   { path: 'temperature', component: TempChartComponent, canActivate : [AuthGuardService] },
   { path: 'humidity', component: HumidityChartComponent, canActivate : [AuthGuardService] },
   { path: 'ppm', component: AirQualityChartComponent, canActivate : [AuthGuardService] },
@@ -36,13 +38,14 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomepageComponent,
     TempChartComponent,
     HumidityChartComponent,
     AirQualityChartComponent,
     SignupComponent,
     SigninComponent,
     HeaderComponent,
+    HomeComponent,
+    MeasurementChoiceComponent,
   ],
   imports: [
     BrowserModule,
