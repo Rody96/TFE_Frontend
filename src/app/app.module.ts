@@ -7,12 +7,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';;
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TemperatureService } from './services/temperature.service';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TempChartComponent } from './temp-chart/temp-chart.component';
 import { HumidityChartComponent } from './humidity-chart/humidity-chart.component';
 import { AirQualityChartComponent } from './air-quality-chart/air-quality-chart.component';
-import { HumidityService } from './services/humidity.service';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { AuthService } from './services/auth/auth.service';
 import { SignupComponent } from './authComponents/signup/signup.component';
@@ -57,7 +55,7 @@ const appRoutes: Routes = [
     NgApexchartsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [TemperatureService, HumidityService, AuthService, authInterceptorProviders],
+  providers: [AuthService, authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

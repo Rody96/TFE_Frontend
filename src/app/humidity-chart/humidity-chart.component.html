@@ -7,6 +7,7 @@ right: 0;
 display: flex;
 justify-content: center;
 flex-direction: column;">
+<h2 style="font-weight: bold;">Taux d'humidité</h2>
   <ngx-charts-line-chart
   [view]="view"
   [scheme]="colorScheme"
@@ -19,9 +20,6 @@ flex-direction: column;">
   [yAxisLabel]="yAxisLabel"
   [timeline]="timeline"
   [results]="measurements"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
   >
 </ngx-charts-line-chart>
 </div>

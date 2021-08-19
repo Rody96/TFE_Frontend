@@ -11,7 +11,7 @@
                       <div class="col-lg-10 col-xl-7 mx-auto">
                         <img src="../../../assets/ic_launcher.png" class="rounded mx-auto d-block">
                           <h3 class="display-4 text-center">AirQualityMonitoring</h3>
-                          <p class="text-muted font-weight-bold font-italic mb-4 text-center">Soyez acteur/actrice contre la pollution intérieure </p>
+                          <p class="text-muted font-weight-bold font-italic mb-4 text-center">Soyez acteur/actrice dans la lutte contre la pollution intérieure </p>
                           <form *ngIf="!isSuccessful" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                               <div class="form-group mb-3">
                                 <input id="lastName" type="text" placeholder="Nom" required="" autofocus="" formControlName="lastName" class="form-control rounded-pill border-0 shadow-sm px-4">
@@ -25,7 +25,7 @@
                               <div class="form-group mb-3">
                                   <input id="password" type="password" placeholder="Mot de passe" required="" formControlName="password" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                               </div>
-                              <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">S'inscrire</button>
+                              <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" [disabled]="signupForm.invalid">S'inscrire</button>
                               <div class="text-center mt-5 "><p>Vous avez déjà un compte ? <a href="auth/signin" class="font-italic text-muted"> 
                                 <u class="text-info">Connectez-vous</u></a></p></div>
                           </form>
