@@ -46,7 +46,6 @@ export class SigninComponent implements OnInit {
     
     this.authService.signin(email, password).subscribe(
       data => {
-        console.log("Data sent:" + data);
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
 

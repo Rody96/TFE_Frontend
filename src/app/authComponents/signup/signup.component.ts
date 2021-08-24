@@ -42,7 +42,6 @@ export class SignupComponent implements OnInit {
     
     this.authService.signup(email, password, lastName, firstName ).subscribe(
       data => {
-        console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         this.router.navigate(['/auth/signin'])

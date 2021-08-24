@@ -57,7 +57,6 @@ export class AirQualityChartComponent implements OnInit {
           (error) => { console.log(error);}
           );
             
-       //console.log(this.measurements)
       Object.assign( this, this.measurements );
     }
   
